@@ -2,9 +2,17 @@
 
 ## Introduction
 
-The ReAG SDK provides a production-grade framework for integrating Reasoning Augmented Generation (ReAG) into your applications. Designed to work with both Python and Typescript, this SDK simplifies document ingestion and intelligent querying without the need for API keys.
+Traditional Retrieval-Augmented Generation (RAG) systems rely on a two-step process: first, semantic search retrieves documents based on surface-level similarities; then, a language model generates answers from those documents. While this method works, it often misses deeper contextual insights and can pull in irrelevant information. ReAG – Reasoning Augmented Generation – offers a robust alternative by feeding raw documents directly to the language model, allowing it to assess and integrate the full context. This unified approach leads to more accurate, nuanced, and context-aware responses.
 
-By removing the complexities of traditional RAG systems, the SDK enables developers to directly ingest markdown formatted documents complete with metadata and execute contextual queries seamlessly.
+# How ReAG Works
+
+ReAG transforms document querying with a streamlined process:
+
+- Raw Document Ingestion: Documents are processed in full, without prior chunking or indexing.
+- Holistic Evaluation: The language model reads entire texts to determine their relevance and extract key information.
+- Dynamic Synthesis: Relevant details are combined into comprehensive answers, mirroring human research methods.
+
+This method eliminates the pitfalls of over-simplified semantic matches and delivers insights that truly address the query's intent.
 
 ## Table of Contents
 
