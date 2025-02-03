@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from "@jest/globals";
 import { openai } from "@ai-sdk/openai";
 
-import { ReagClient, ClientOptions } from "../client";
+import { ReagClient, ClientOptions } from "../src/client";
 
 describe("typescript client", () => {
   let client: ReagClient;
