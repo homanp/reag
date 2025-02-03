@@ -1,4 +1,4 @@
-# 🎓 ReAG SDK
+# 🎓 ReAG TypeScript SDK
 
 ## Introduction
 
@@ -34,11 +34,11 @@ By removing the complexities of traditional RAG systems, the SDK enables develop
 1. Ensure Node.js (14+) is installed.
 2. Install using npm:
    ```bash
-   npm install reag
+   npm install @superagent-ai/reag
    ```
 3. Or using Yarn:
    ```bash
-   yarn add reag
+   yarn add @superagent-ai/reag
    ```
 
 ## Quick Start
