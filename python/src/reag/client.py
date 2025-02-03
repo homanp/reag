@@ -39,11 +39,13 @@ class ReagClient:
     def __init__(
         self,
         model: str = "gpt-4o-mini",
+        filtration_model: str = "minimax",
         system: str = None,
         batch_size: int = DEFAULT_BATCH_SIZE,
         schema: Optional[BaseModel] = None,
     ):
         self.model = model
+        self.filtration_model = filtration_model
         self.system = system or REAG_SYSTEM_PROMPT
         self.batch_size = batch_size
         self.schema = schema or ResponseSchemaMessage
@@ -161,9 +163,9 @@ class ReagClient:
                         f"{self.system}\n\n# Available source\n\n{format_doc(document)}"
                     )
 
-                    # Use litellm for model completion with the Pydantic schema
-                    response = await acompletion(
-                        model=self.model,
+                    # Use litellm for model completion with the filtration model
+                    filtration_response = await acompletion(
+                        model=self.filtration_model,
                         messages=[
                             {"role": "system", "content": system},
                             {"role": "user", "content": prompt},
@@ -171,36 +173,56 @@ class ReagClient:
                         response_format=self.schema,
                     )
 
-                    message_content = response.choices[
+                    filtration_message_content = filtration_response.choices[
                         0
                     ].message.content  # Might be a JSON string
 
                     try:
                         # Ensure it's parsed as a dict
-                        data = (
-                            json.loads(message_content)
-                            if isinstance(message_content, str)
-                            else message_content
+                        filtration_data = (
+                            json.loads(filtration_message_content)
+                            if isinstance(filtration_message_content, str)
+                            else filtration_message_content
                         )
 
-                        if data["source"].get("is_irrelevant", True):
+                        if filtration_data["source"].get("is_irrelevant", True):
                             continue
+
+                        # Use litellm for model completion with the reasoning model
+                        reasoning_response = await acompletion(
+                            model=self.model,
+                            messages=[
+                                {"role": "system", "content": system},
+                                {"role": "user", "content": prompt},
+                            ],
+                            response_format=self.schema,
+                        )
+
+                        reasoning_message_content = reasoning_response.choices[
+                            0
+                        ].message.content  # Might be a JSON string
+
+                        reasoning_data = (
+                            json.loads(reasoning_message_content)
+                            if isinstance(reasoning_message_content, str)
+                            else reasoning_message_content
+                        )
 
                         results.append(
                             QueryResult(
-                                content=data["source"].get("content", ""),
-                                reasoning=data["source"].get("reasoning", ""),
-                                is_irrelevant=data["source"].get(
+                                content=reasoning_data["source"].get("content", ""),
+                                reasoning=reasoning_data["source"].get("reasoning", ""),
+                                is_irrelevant=reasoning_data["source"].get(
                                     "is_irrelevant", False
                                 ),
                                 document=document,
                             )
                         )
                     except json.JSONDecodeError:
-                        print("Error: Could not parse response:", message_content)
+                        print("Error: Could not parse response:", filtration_message_content)
                         continue  # Skip this iteration if parsing fails
 
-                return results
+            return results
 
         except Exception as e:
             raise Exception(f"Query failed: {str(e)}")

@@ -37,6 +37,7 @@ Initialize the client by providing required configuration options:
 ```typescript
 client = new ReagClient(
   model: "o3-mini", // LiteLLM model name
+  filtration_model: "minimax", // Filtration model name
   system: Optional[str] // Optional system prompt
   batchSize: Optional[Number] // Optional batch size
   schema: Optional[BaseModel] // Optional Pydantic schema
