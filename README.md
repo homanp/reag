@@ -4,7 +4,7 @@
 
 Traditional Retrieval-Augmented Generation (RAG) systems rely on a two-step process: first, semantic search retrieves documents based on surface-level similarities; then, a language model generates answers from those documents. While this method works, it often misses deeper contextual insights and can pull in irrelevant information. ReAG – Reasoning Augmented Generation – offers a robust alternative by feeding raw documents directly to the language model, allowing it to assess and integrate the full context. This unified approach leads to more accurate, nuanced, and context-aware responses.
 
-# How ReAG Works
+## How ReAG Works
 
 ReAG transforms document querying with a streamlined process:
 
