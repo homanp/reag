@@ -1,6 +1,6 @@
 {
   "name": "@superagent-ai/reag",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Reasoning Augmented Generation",
   "main": "dist/client.js",
   "types": "dist/client.d.ts",
