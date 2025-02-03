@@ -43,7 +43,7 @@ By removing the complexities of traditional RAG systems, the SDK enables develop
 
 ## Quick Start
 ```typescript
-import { ReagClient, ClientOptions } from 'reag';
+import { ReagClient, ClientOptions } from '@superagent-ai/reag';
 import { openai } from "@ai-sdk/openai";
 
 // Initialize the SDK with required options
