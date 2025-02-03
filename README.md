@@ -1,4 +1,4 @@
-# 🎓 ReAG SDK
+# 🎓 ReAG - Reasoning Augmented Generation
 
 ## Introduction
 
