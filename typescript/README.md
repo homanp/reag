@@ -5,10 +5,12 @@
 2. Install using npm:
    ```bash
    npm install @superagent-ai/reag
+   npm install @ai-sdk/openai
    ```
 3. Or using Yarn:
    ```bash
    yarn add @superagent-ai/reag
+   yarn add @ai-sdk/openai
    ```
 
 ## Quick Start
