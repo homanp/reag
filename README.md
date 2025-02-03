@@ -37,87 +37,148 @@ By removing the complexities of traditional RAG systems, the SDK enables develop
 1. Ensure Python 3.8+ is installed.
 2. Install the SDK via pip:
    ```bash
-   pip install reag-sdk
+   pip install reag
    ```
 3. Verify the installation:
    ```bash
-   python -m reag_sdk --help
+   python -m reag --help
    ```
 
 ### Typescript
 1. Ensure Node.js (14+) is installed.
 2. Install using npm:
    ```bash
-   npm install reag-sdk
+   npm install reag
    ```
 3. Or using Yarn:
    ```bash
-   yarn add reag-sdk
+   yarn add reag
    ```
 
 ## Quick Start
 
 ### Python Example
-```python
-import reag_sdk
-
-# Initialize the SDK (no API key required)
-client = reag_sdk.Client()
-
-# Prepare markdown content and metadata for ingestion
-with open("document.md", "r", encoding="utf-8") as f:
-    markdown_content = f.read()
-
-metadata = {
-    "title": "Document Title",
-    "description": "A brief description of the document",
-    "tags": ["reag", "sdk", "example"]
-}
-
-# Ingest the document with metadata and markdown content
-client.ingest_document(document_id="doc1", metadata=metadata, content=markdown_content)
-
-# Query for information
-response = client.query("Describe the main features of the SDK")
-print(response)
-```
+Coming soon...
 
 ### Typescript Example
 ```typescript
-import { Client } from 'reag-sdk';
-import * as fs from 'fs';
+import { ReagClient, ClientOptions } from 'reag';
+import { openai } from "@ai-sdk/openai";
 
-// Initialize the SDK (no API key required)
-const client = new Client();
+// Initialize the SDK with required options
+const client = new ReagClient({
+  model: openai("o3-mini", { structuredOutputs: true }),
+  // system: optional system prompt here or use the default
+});
 
-// Prepare markdown content and metadata for ingestion
-const markdownContent = fs.readFileSync('document.md', 'utf-8');
-const metadata = {
-  title: "Document Title",
-  description: "A brief description of the document",
-  tags: ["reag", "sdk", "example"]
+// Example document with metadata
+const document = {
+  name: "Getting Started",
+  content: "ReAG SDK is a framework for Reasoning Augmented Generation...",
+  metadata: {
+    url: "https://docs.example.com/getting-started",
+    source: "documentation",
+    id: "doc-1"
+  }
 };
 
-// Ingest the document with metadata and markdown content
-client.ingestDocument('doc1', metadata, markdownContent)
-  .then(() => client.query("Describe the main features of the SDK"))
-  .then(response => console.log(response))
-  .catch(error => console.error(error));
+// Query with document context and filters
+const response = await client.query(
+  "Describe the main features of the SDK",
+  [document],
+  {
+    filter: [
+      {
+        key: "source",
+        value: "documentation",
+        operator: "equals"
+      }
+    ]
+  }
+);
+
+// Response includes: content, reasoning, isIrrelevant, and document reference
+console.log('Query Response:', response);
 ```
 
 ## API Reference
 
 ### Initialization
-Initialize the client without the need for an API key.
+Initialize the client by providing required configuration options:
 
-### Document Ingestion
-- **Python Method:** `ingest_document(document_id: str, metadata: dict, content: str)`
-- **Typescript Method:** `ingestDocument(documentId: string, metadata: object, content: string)`
+```typescript
+const client = new ReagClient({
+  model: openai("o3-mini", { structuredOutputs: true }),
+  system?: string // Optional system prompt
+  batchSize?: number // Optional batch size
+  schema?: z.ZodSchema // Optional schema
+});
+```
 
-These methods allow you to ingest documents by providing metadata (as key-value pairs) and content in markdown.
+### Document Structure
+Documents should follow this structure:
+```typescript
+interface Document {
+  name: string;
+  content: string;
+  metadata: {
+    [key: string]: any;  // Custom metadata fields
+  }
+}
+```
 
 ### Querying
-Use the `query` method to retrieve processed information based on your contextual queries.
+Query documents with optional filters:
+
+```typescript
+const response = await client.query(
+  query: string,
+  documents: Document[],
+  options?: {
+    filter?: Array<{
+      key: string;
+      value: string | number;
+      operator: "equals" | "greaterThanOrEqual" // and other operators
+    }>
+  }
+);
+```
+
+Response structure:
+```typescript
+interface QueryResponse {
+  content: string;      // Generated response
+  reasoning: string;    // Reasoning behind the response
+  isIrrelevant: boolean; // Relevance indicator
+  document: Document;   // Reference to source document
+}
+```
+
+Example filters:
+- Filter by metadata field:
+  ```typescript
+  {
+    filter: [
+      {
+        key: "source",
+        value: "documentation",
+        operator: "equals"
+      }
+    ]
+  }
+  ```
+- Filter by numeric values:
+  ```typescript
+  {
+    filter: [
+      {
+        key: "version",
+        value: 2,
+        operator: "greaterThanOrEqual"
+      }
+    ]
+  }
+  ```
 
 ## Contributing
 
@@ -129,10 +190,9 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Additional Resources
 - [ReAG Blog Post](https://www.superagent.sh/blog/reag-reasoning-augmented-generation) - A deep dive into ReAG.
-- [Documentation](https://your-docs-url.com) - Additional guides and references.
 
 ## Contact
 
 For support or inquiries, please contact:
-- [Create Issue](https://github.com/your-repo/issues)
+- [Create Issue](https://github.com/superagent-ai/reag/issues)
 - X: [@superagent_ai](https://x.com/superagent_ai)

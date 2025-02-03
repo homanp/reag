@@ -1,0 +1,43 @@
+{
+  "name": "reag",
+  "version": "1.0.0",
+  "description": "Reasoning Augmented Generation",
+  "main": "dist/client.js",
+  "types": "dist/client.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/superagent-ai/reag"
+  },
+  "keywords": [
+    "typescript",
+    "sdk",
+    "ai",
+    "ai-sdk",
+    "client"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/superagent-ai/reag/issues"
+  },
+  "homepage": "https://github.com/superagent-ai/reag#readme",
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/node": "^18.16.3",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "@ai-sdk/openai": "^1.1.9",
+    "ai": "^4.1.16",
+    "dotenv": "^16.4.7",
+    "zod": "^3.24.1"
+  }
+}
