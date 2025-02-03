@@ -1,35 +1,5 @@
 # 🎓 ReAG TypeScript SDK
 
-## Introduction
-
-The ReAG SDK provides a production-grade framework for integrating Reasoning Augmented Generation (ReAG) into your applications. Designed to work with both Python and Typescript, this SDK simplifies document ingestion and intelligent querying without the need for API keys.
-
-By removing the complexities of traditional RAG systems, the SDK enables developers to directly ingest markdown formatted documents complete with metadata and execute contextual queries seamlessly.
-
-## Table of Contents
-- [Introduction](#introduction)
-- [Features](#features)
-- [Installation](#installation)
-  - [Python](#python)
-  - [Typescript](#typescript)
-- [Quick Start](#quick-start)
-- [API Reference](#api-reference)
-  - [Initialization](#initialization)
-  - [Document Ingestion](#document-ingestion)
-  - [Querying](#querying)
-- [Contributing](#contributing)
-- [License](#license)
-- [Additional Resources](#additional-resources)
-- [Contact](#contact)
-
-## Features
-- **Multi-language Support:** Available for both Python and Typescript.
-- **Document Ingestion:** Ingest markdown formatted documents with associated metadata.
-- **Intelligent Querying:** Retrieve sources and insights based on contextual queries.
-- **Language Model Agnostic:** Works with any preferred language model.
-- **Production Ready:** Robust, scalable, and designed for real-world applications.
-- **Type Safety:** Full TypeScript support with comprehensive type definitions.
-
 ## Installation
 1. Ensure Node.js (14+) is installed.
 2. Install using npm:
