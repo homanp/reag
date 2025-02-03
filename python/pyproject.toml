@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "reag"
-version = "0.0.1"
+version = "0.0.2"
 description = "ReAG SDK - Reasoning Augmented Generation framework for Python"
 authors = ["Ismail Pelaseyed <ismail@superagent.sh>"]
 readme = "README.md"
