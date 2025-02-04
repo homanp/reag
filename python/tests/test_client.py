@@ -1,5 +1,5 @@
 import pytest
-from src.reag.client import ReagClient, Document, QueryResult
+from reag.client import ReagClient, Document, QueryResult
 
 
 @pytest.mark.asyncio
