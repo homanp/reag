@@ -13,8 +13,9 @@
 ```python
 from reag.client import ReagClient, Document
 
-
- async with ReagClient() as client:
+async with ReagClient(
+      model="ollama/deepseek-r1:14b",
+      api_base="http://localhost:11434") as client:
         docs = [
             Document(
                 name="Superagent",
@@ -36,7 +37,7 @@ Initialize the client by providing required configuration options:
 
 ```typescript
 client = new ReagClient(
-  model: "o3-mini", // LiteLLM model name
+  model: "gpt-4o-mini", // LiteLLM model name
   system: Optional[str] // Optional system prompt
   batchSize: Optional[Number] // Optional batch size
   schema: Optional[BaseModel] // Optional Pydantic schema
